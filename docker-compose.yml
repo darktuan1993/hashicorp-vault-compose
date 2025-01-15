@@ -8,15 +8,15 @@ services:
     ports:
       - "8200:8200"
     volumes:
-      - ./vault/logs:/vault/logs:rw
-      - ./vault/file:/vault/file:rw
-      - ./vault/config:/vault/config
+      - ${PWD}/vault/logs:/vault/logs:rw
+      - ${PWD}/vault/file:/vault/file:rw
+      - ${PWD}/vault/config:/vault/config
     cap_add:
       - IPC_LOCK
     environment:
       - VAULT_ADDR=http://0.0.0.0:8200
       # - VAULT_API_ADDR=http://vault-bravo:8200
-    entrypoint: vault server -config=/vault/config/vault.json
+    entrypoint: ["vault", "server", "-config=/vault/config/vault.json"]
     healthcheck:
       test: ["CMD", "vault", "status"]
       interval: 10s
@@ -24,6 +24,7 @@ services:
       start_period: 5s
     networks:
       - vault-network
+
 networks:
   vault-network:
     driver: bridge
