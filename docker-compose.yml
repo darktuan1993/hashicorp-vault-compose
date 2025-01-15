@@ -3,7 +3,7 @@ services:
   vault-server:
     image: vault:1.13.3
     container_name: vault-bravo
-    user: vault:vault
+    # user: vault:vault
     restart: always
     ports:
       - "8200:8200"
