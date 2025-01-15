@@ -1,5 +1,5 @@
 {
-    "backend": {
+    "storage": {
         "file": {
             "path": "/vault/file"
         }
@@ -7,8 +7,18 @@
     "listener": {
         "tcp": {
             "address": "0.0.0.0:8200",
-            "tls_disable": 1
+            "tls_disable": true
         }
     },
-    "ui": true
+    "ui": true,
+    "disable_mlock": true,
+    "log_file": "/vault/logs/vault.json",
+    "log_level": "info",
+    "log_format": "json",
+    "log_rotate_duration": "24h",
+    "cache_size": "64MB",
+    "telemetry": {
+        "disable_hostname": true,
+        "prometheus_retention_time": "12h"
+    }
 }

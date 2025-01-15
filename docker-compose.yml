@@ -2,14 +2,28 @@ version: "3.8"
 services:
   vault-server:
     image: vault:1.13.3
-    container_name: vault-server
+    container_name: vault-bravo
+    user: vault:vault
+    restart: always
     ports:
       - "8200:8200"
-    restart: always
     volumes:
-      - ./vault/logs:/vault/logs
-      - ./vault/file:/vault/file
+      - ./vault/logs:/vault/logs:rw
+      - ./vault/file:/vault/file:rw
       - ./vault/config:/vault/config
     cap_add:
       - IPC_LOCK
+    environment:
+      - VAULT_ADDR=http://0.0.0.0:8200
+      # - VAULT_API_ADDR=http://vault-bravo:8200
     entrypoint: vault server -config=/vault/config/vault.json
+    healthcheck:
+      test: ["CMD", "vault", "status"]
+      interval: 10s
+      retries: 5
+      start_period: 5s
+    networks:
+      - vault-network
+networks:
+  vault-network:
+    driver: bridge
