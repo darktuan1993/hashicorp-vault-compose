@@ -16,7 +16,7 @@
     "log_level": "info",
     "log_format": "json",
     "log_rotate_duration": "24h",
-    "cache_size": "64MB",
+    "cache_size": "32768",
     "telemetry": {
         "disable_hostname": true,
         "prometheus_retention_time": "12h"
